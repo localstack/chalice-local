@@ -21,13 +21,15 @@ def create_client(self, service, *args, **kwargs):
     result = create_client_orig(self, service, *args, **kwargs)
     return result
 
-# initialize configs
-os.environ['AWS_ACCESS_KEY_ID'] = os.environ.get('AWS_ACCESS_KEY_ID')
-os.environ['AWS_SECRET_ACCESS_KEY'] = os.environ.get('AWS_SECRET_ACCESS_KEY')
-
 # patch creation of botocore clients to use local endpoints
 create_client_orig = Session.create_client
 Session.create_client = create_client
+
+# initialize configs to avoid boto initialization issues
+os.environ['AWS_ACCESS_KEY_ID'] = os.environ.get('AWS_ACCESS_KEY_ID') or 'test'
+os.environ['AWS_SECRET_ACCESS_KEY'] = os.environ.get('AWS_SECRET_ACCESS_KEY') or 'test'
+os.environ['AWS_DEFAULT_REGION'] = (
+    os.environ.get('DEFAULT_REGION') or os.environ.get('AWS_DEFAULT_REGION') or 'us-east-1')
 
 if __name__ == '__main__':
     sys.exit(main())

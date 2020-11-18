@@ -26,7 +26,7 @@ if __name__ == '__main__':
 
     setup(
         name='chalice-local',
-        version='0.1.0',
+        version='0.1.1',
         description=' Small wrapper script to use AWS Chalice with LocalStack ',
         author='Waldemar Hummer',
         author_email='waldemar.hummer@gmail.com',
