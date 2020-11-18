@@ -1,0 +1,2 @@
+chalice
+localstack-client

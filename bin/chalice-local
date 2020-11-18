@@ -1,0 +1,33 @@
+#!/usr/bin/env python
+
+import os
+import sys
+import glob
+
+PARENT_FOLDER = os.path.realpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..'))
+venv_dir = os.path.join(PARENT_FOLDER, '.venv')
+if os.path.isdir(venv_dir):
+    for path in glob.glob(os.path.join(venv_dir, 'lib/python*/site-packages')):
+        sys.path.insert(0, path)
+    sys.path.insert(0, PARENT_FOLDER)
+
+from chalice.cli import main
+from botocore.session import Session
+from localstack_client.config import get_service_endpoint
+
+
+def create_client(self, service, *args, **kwargs):
+    kwargs['endpoint_url'] = get_service_endpoint(service)
+    result = create_client_orig(self, service, *args, **kwargs)
+    return result
+
+# initialize configs
+os.environ['AWS_ACCESS_KEY_ID'] = os.environ.get('AWS_ACCESS_KEY_ID')
+os.environ['AWS_SECRET_ACCESS_KEY'] = os.environ.get('AWS_SECRET_ACCESS_KEY')
+
+# patch creation of botocore clients to use local endpoints
+create_client_orig = Session.create_client
+Session.create_client = create_client
+
+if __name__ == '__main__':
+    sys.exit(main())
