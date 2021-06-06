@@ -17,7 +17,10 @@ from localstack_client.config import get_service_endpoint
 
 
 def create_client(self, service, *args, **kwargs):
-    kwargs['endpoint_url'] = get_service_endpoint(service)
+    kwargs['endpoint_url'] = get_service_endpoint(
+        service, 
+        os.environ['LOCALSTACK_HOST'] or 'localhost'
+    )    
     result = create_client_orig(self, service, *args, **kwargs)
     return result
 
