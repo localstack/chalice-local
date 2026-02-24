@@ -1,7 +1,7 @@
 # AWS Chalice Client for LocalStack
 
 This project provides `chalice-local`, a small wrapper script to use
-[AWS Chalice](https://github.com/aws/chalice) with [LocalStack](https://github.com/localstack/localstack).
+[AWS Chalice](https://github.com/aws/chalice) with [LocalStack for AWS](https://www.localstack.cloud/localstack-for-aws).
 
 ## Installing
 

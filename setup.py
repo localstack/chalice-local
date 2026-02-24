@@ -30,7 +30,7 @@ if __name__ == '__main__':
         description='Small wrapper script to use AWS Chalice with LocalStack',
         author='LocalStack Team',
         author_email='info@localstack.cloud',
-        url='https://github.com/localstack/localstack',
+        url='https://www.localstack.cloud',
         scripts=['bin/chalice-local', 'bin/chalice-local.bat'],
         packages=find_packages(exclude=('tests', 'tests.*')),
         package_data=package_data,
